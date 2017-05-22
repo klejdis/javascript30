@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+	<style type="text/css">
+		body{
+			width: 100%;
+			background-image: url(images/percussion-387670_1920.jpg);
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+		
+		.key-wrapper{
+			width: 1100px;
+			height: 80px;
+			margin: 0 auto;
+			color: #fff;
+			text-align: center;
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+
+		.key{
+			width: 80px;
+			height: 80px;
+			background-color: rgba(0,0,0,.5);
+			float: left;
+			margin: 0 15px;
+			color: #ffffff;
+			border: 5px solid #222;
+			border-radius: 8px;
+			transition:all 0.07s ease;
+		}
+
+		.key b{
+			font-size: 32px;
+			opacity: 1;
+		}
+
+		.sound{
+			display: block;
+			width: 100%;
+		}
+
+		.playing{
+			border: 5px solid yellow;
+			transform: scale(1,1);
+		}
+
+	</style>
+</head>
+<body>
+
+
+<div class="key-wrapper">
+	
+
+	<div data-key="65" class="key">
+		<b>A</b>
+		<span class="sound">clap</span>
+	</div>
+
+	<div data-key="83" class="key">
+		<b>S</b>
+		<span class="sound">HITHAT</span>
+	</div>
+
+
+	<div data-key="68" class="key">
+		<b>D</b>
+		<span class="sound">KICK</span>
+	</div>
+
+	
+	<div data-key="70" class="key">
+		<b>F</b>
+		<span class="sound">OPENHAT</span>
+	</div>
+
+	<div data-key="71" class="key">
+		<b>G</b>
+		<span class="sound">BOOM</span>
+	</div>
+
+	<div data-key="72" class="key">
+		<b>H</b>
+		<span class="sound">RIDE</span>
+	</div>
+
+	<div data-key="74" class="key">
+		<b>J</b>
+		<span class="sound">SNARE</span>
+	</div>
+
+	<div data-key="75" class="key">
+		<b>K</b>
+		<span class="sound">TOM</span>
+	</div>
+
+    <div data-key="76" class="key">
+		<b>L</b>
+		<span class="sound">TINK</span>
+	</div>
+
+
+  <audio data-key="65" id="65" src="sounds/clap.wav"></audio>
+  <audio data-key="83" id="83" src="sounds/hihat.wav"></audio>
+  <audio data-key="68" id="68" src="sounds/kick.wav"></audio>
+  <audio data-key="70" id="70" src="sounds/openhat.wav"></audio>
+  <audio data-key="71" id="71" src="sounds/boom.wav"></audio>
+  <audio data-key="72" id="72" src="sounds/ride.wav"></audio>
+  <audio data-key="74" id="74" src="sounds/snare.wav"></audio>
+  <audio data-key="75" id="75" src="sounds/tom.wav"></audio>
+  <audio data-key="76" id="76" src="sounds/tink.wav"></audio>
+
+
+</div>	
+
+
+<script type="text/javascript">
+	
+	// function playsound(e){
+		
+	// 	var key = document.querySelectorAll('div[data-key="`+e.keyCode+`"]');
+	// 	var audio =  document.getElementById(e.keyCode);
+	// 	if (!audio) return;
+
+	// 	key.classList.add('playing');
+	// 	//play the audio
+	// 	audio.currentTime = 0;
+ //    	audio.play();
+	// }
+	// window.addEventListener('keydown' , playsound);
+
+
+function removeTransition(e) {
+    if (e.propertyName !== 'transform') return;
+    e.target.classList.remove('playing');
+  }
+
+  function playSound(e) {
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+    if (!audio) return;
+
+    key.classList.add('playing');
+    audio.currentTime = 0;
+    audio.play();
+  }
+
+  const keys = Array.from(document.querySelectorAll('.key'));
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+  window.addEventListener('keydown', playSound);
+</script>
+
+</body>
+</html>
